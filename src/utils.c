@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <openssl/err.h> 
-#include "../include/key_iv.h"
+#include <openssl/err.h>
 #include "../include/utils.h"
 
 size_t get_file_size(const char *filename) {
