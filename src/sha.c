@@ -4,7 +4,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include "../include/KISA_SHA256.h"
-//#include "../include/key_iv.h"
 #include "../include/aes.h"
 #include "../include/utils.h"
 #include "../include/sha.h"
