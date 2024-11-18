@@ -1,0 +1,10 @@
+In mac
+터미널에 make 후 ./aes_program
+
+In windowns 
+https://jstar0525.tistory.com/264
+이거 이용해서 make명령어 사용할수 있게 한후 ./이용해서 실행은 맥과 동일
+
+
+17일날 할일 : 파일 쪼개기 완
+19일 할일 : 비번 솔트 같은데 hash다른 문제 해결하기

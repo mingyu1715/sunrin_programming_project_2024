@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "utils.h": "c",
+        "aes.h": "c",
+        "key_iv.h": "c",
+        "kisa_sha256.h": "c"
+    }
+}
