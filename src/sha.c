@@ -16,17 +16,6 @@ void make_salt(unsigned char* salt, size_t salt_len) {
     }
 }
 
-    /*
-    [[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]
-
-
-    이 코드는 이상 없는듯?
-    
-
-    [[[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]]]]
-
-    */
-
 void calculate_hash(const unsigned char* password, const unsigned char* salt, unsigned char* hash) {
     size_t password_len = strlen((char*)password);
     unsigned char sp[48];

@@ -6,6 +6,7 @@
 #include "../include/aes.h"
 #include "../include/utils.h"
 #include "../include/sha.h"
+#include "../include/KISA_SHA256.h"
 
 int main() {
     // 비밀번호 입력 받기
@@ -43,13 +44,20 @@ int main() {
 
     */
     // 사용자로부터 받은 솔트와 변환된 바이트 배열 출력
-    printf("\n입력받은 솔트 (16진수): %s\n", salt_input);
     printf("바이트 배열로 변환된 솔트: ");
     print_hex(user_salt, sizeof(user_salt));
 
     // 비밀번호와 사용자가 입력한 솔트로부터 키를 생성
     unsigned char key[32];
     calculate_hash(password, user_salt, key);
+    /*
+    unsigned char key_test[32];
+    size_t password_len = strlen((char*)password);
+
+    SHA256_Encrpyt(password,password_len, key_test);
+    printf("생성된 테스트 키 (SHA-256 해시): ");
+    print_hex(key_test, sizeof(key_test));
+    */
     
     // 생성된 키 출력
     printf("생성된 키 (SHA-256 해시): ");
