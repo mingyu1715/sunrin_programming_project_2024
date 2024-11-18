@@ -1,7 +1,6 @@
 #include <openssl/evp.h>
 #include <openssl/err.h> 
 #include <stdlib.h>
-#include "../include/key_iv.h"
 #include "../include/aes.h"
 #include "../include/utils.h"
 

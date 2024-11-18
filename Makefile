@@ -10,7 +10,7 @@ LDFLAGS = -L$(OPENSSL_DIR)/lib -lssl -lcrypto
 TARGET = aes_program
 
 # 오브젝트 파일 목록
-OBJS = src/aes.o src/main.o src/utils.o src/sha.o src/KISA_SHA256.o
+OBJS = src/aes.o src/main.o src/utils.o src/sha.o
 
 # 기본 타겟: aes_program 만들기
 $(TARGET): $(OBJS)
@@ -27,10 +27,6 @@ src/main.o: src/main.c
 # sha.o 파일 컴파일 규칙
 src/sha.o: src/sha.c
 	$(CC) $(CFLAGS) -c src/sha.c -o src/sha.o
-
-# KISA_SHA256.o 파일 컴파일 규칙
-src/KISA_SHA256.o: src/KISA_SHA256.c
-	$(CC) $(CFLAGS) -c src/KISA_SHA256.c -o src/KISA_SHA256.o
 
 # utils.o 파일 컴파일 규칙
 src/utils.o: src/utils.c
