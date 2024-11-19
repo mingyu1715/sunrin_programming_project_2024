@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ username }}님의 메모 목록</h1>
+    <ul>
+        {% for memo in memos %}
+        <li>{{ memo }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>새 메모 작성</h2>
+    <!-- 새 메모 작성 페이지로 이동하는 버튼 -->
+    <a href="/create_note"><button>새 메모 작성하기</button></a>
+</body>
+</html>

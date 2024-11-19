@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가입하기</title>
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        /* 가입 박스 스타일 */
+        .register-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideIn 1s forwards 0.3s;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            text-align: left;
+            display: block;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 1.1em;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .register-box {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>새로운 계정을 만들어보세요!</h2>
+
+    <div class="register-box">
+        <h1>회원 가입</h1>
+        
+        <!-- 오류 메시지를 출력 -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="/register">
+            <label for="username">아이디:</label>
+            <input type="text" id="username" name="username" required><br><br>
+
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <label for="re_password">비밀번호 확인:</label>
+            <input type="password" id="re_password" name="re_password" required><br><br>
+
+            <button type="submit">가입하기</button>
+        </form>
+        
+        <a href="/">로그인 페이지로 돌아가기</a>
+    </div>
+</body>
+</html>
