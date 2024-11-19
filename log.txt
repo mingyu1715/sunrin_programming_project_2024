@@ -322,3 +322,16 @@ ed e6 5f b1 af 7d 6a 63 50 20 46 9b 66 6f dd 65
 93 2b cc de 0f f0 44 22 16 32 df a4 b1 e8 0d 0a
 
 [2024-11-18 21:09:42] 복호화된 데이터가 저장된 파일: ./data/decrypted_files/decrypted_2024-11-18_210942.txt
+[2024-11-19 08:49:04] 암호화된 데이터가 저장된 파일: ./data/encrypted_files/encrypted_2024-11-19_084904.txt
+af 94 22 1d 5d 36 54 0c d4 f4 3b fb a4 a1 8e 57
+
+[2024-11-19 08:49:04] 복호화된 데이터가 저장된 파일: ./data/decrypted_files/decrypted_2024-11-19_084904.txt
+[2024-11-19 08:49:22] 암호화된 데이터가 저장된 파일: ./data/encrypted_files/encrypted_2024-11-19_084922.txt
+af 94 22 1d 5d 36 54 0c d4 f4 3b fb a4 a1 8e 57
+
+[2024-11-19 08:49:22] 복호화된 데이터가 저장된 파일: ./data/decrypted_files/decrypted_2024-11-19_084922.txt
+[2024-11-19 09:36:16] 암호화된 데이터가 저장된 파일: ./data/encrypted_files/encrypted_2024-11-19_093616.txt
+a7 84 7e 19 04 a5 5f 9e 19 9b 34 24 8e 16 46 3a
+34 0a d9 19 f6 b0 0d 25 7a 39 e2 67 5b 0f 9b 7d
+
+[2024-11-19 09:36:16] 복호화된 데이터가 저장된 파일: ./data/decrypted_files/decrypted_2024-11-19_093616.txt
