@@ -1,7 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <sqlite3.h>
+#include <sys/stat.h>
 #include <openssl/rand.h>
+#include <stdio.h>
+
+#if defined(_WIN32) || defined(_WIN64)
+    #include <direct.h>
+    #define CREATE_FOLDER(folderName) _mkdir(folderName)
+#else
+    #include <sys/stat.h>
+    #define CREATE_FOLDER(folderName) mkdir(folderName, 0755)
+#endif
+
 #include "../include/sha.h"
 
 // SQLite3에서 DB 연결 함수
@@ -11,17 +22,42 @@ sqlite3* connect_db() {
     return db;
 }
 
-// 사용자 테이블 생성
 void create_user_table(sqlite3 *db) {
     const char *sql = "CREATE TABLE IF NOT EXISTS users ("
                       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                       "username TEXT NOT NULL UNIQUE, "
                       "password BLOB NOT NULL, "
                       "salt BLOB NOT NULL);";
-    sqlite3_exec(db, sql, 0, 0, 0);
+
+    char *err_msg = 0;
+    int rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error: %s\n", err_msg);
+        sqlite3_free(err_msg);
+    }
 }
 
-// 사용자 추가 (기존 사용자 대체)
+// 디렉토리 생성 함수
+void create_folder(const char *path) {
+    struct stat st;
+
+    // 경로 존재 여부 확인
+    if (stat(path, &st) == 0) {
+        if (S_ISDIR(st.st_mode)) {
+            //printf("디렉토리가 이미 존재합니다: %s\n", path);
+        } else {
+            //perror("동일한 이름의 파일이 존재합니다: %s\n", path);
+        }
+    } else {
+        if (mkdir(path, 0755) == 0) {
+            //printf("디렉토리 생성 성공: %s\n", path);
+        } else {
+            //perror("디렉토리 생성 실패");
+        }
+    }
+}
+
+
 void add_user(sqlite3 *db, const char *username, const char *password) {
     sqlite3_stmt *stmt;
     unsigned char salt[16];
@@ -47,6 +83,8 @@ void add_user(sqlite3 *db, const char *username, const char *password) {
         }
     }
 
+
+    // 사용자 정보를 데이터베이스에 추가
     const char *sql = "INSERT INTO users (username, password, salt) VALUES (?, ?, ?)";
     sqlite3_prepare_v2(db, sql, -1, &stmt, 0);
     sqlite3_bind_text(stmt, 1, username, -1, SQLITE_STATIC);
@@ -55,6 +93,10 @@ void add_user(sqlite3 *db, const char *username, const char *password) {
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 
+    // 사용자 디렉토리 생성
+    char path[256];
+    snprintf(path, sizeof(path), "data/userdata/%s", username);
+    create_folder(path);
     printf("1\n");  // 사용자 추가 성공
 }
 
@@ -111,7 +153,7 @@ int main(int argc, char *argv[]) {
 
     sqlite3 *db = connect_db();
     if (db == NULL) {
-        printf("Failed to open database\n");
+        //printf("Failed to open database\n");
         return 1;
     }
 

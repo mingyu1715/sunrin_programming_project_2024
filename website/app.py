@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import subprocess
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # flash()를 사용하려면 비밀키가 필요합니다.
@@ -7,7 +8,7 @@ app.secret_key = 'your_secret_key'  # flash()를 사용하려면 비밀키가 �
 def check_login_with_c(username, password):
     try:
         result = subprocess.run(
-            ['./login_system', username, password, 'login'],  # 'login' 액션
+            ['./user_management', username, password, 'login'],  # 'login' 액션
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
@@ -27,7 +28,7 @@ def check_login_with_c(username, password):
 def register_user_with_c(username, password):
     try:
         result = subprocess.run(
-            ['./login_system', username, password, 'register'],  # 'register' 액션
+            ['./user_management', username, password, 'register'],  # 'register' 액션
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
@@ -54,8 +55,17 @@ def login():
         result = check_login_with_c(username, password)
         
         if result == 1:
-            memos = ["메모 1", "메모 2", "메모 3"]
+            # 디렉토리 경로 설정 (여기서는 예시로 'data/userdata/<username>/notes/' 디렉토리 사용)
+            notes_directory = f"data/userdata/{username}"
+            
+            # 해당 디렉토리 내 파일 목록을 가져오기
+            if os.path.exists(notes_directory):
+                memos = [f for f in os.listdir(notes_directory) if os.path.isfile(os.path.join(notes_directory, f))]
+            else:
+                memos = []  # 디렉토리가 존재하지 않으면 빈 리스트 반환
+
             return render_template('memo_list.html', username=username, memos=memos)
+        
         elif result == -2:
             flash("유저 정보를 찾을 수 없습니다.")
             return redirect(url_for('login'))
