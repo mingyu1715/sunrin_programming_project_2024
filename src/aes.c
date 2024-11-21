@@ -1,4 +1,3 @@
-source venv/bin/activate
 #include <openssl/evp.h>
 #include <openssl/err.h> 
 #include <stdlib.h>
