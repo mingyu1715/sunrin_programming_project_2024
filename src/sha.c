@@ -4,6 +4,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <openssl/sha.h>
+#include <openssl/evp.h>   // EVP_sha256(), PKCS5_PBKDF2_HMAC
+#include <openssl/err.h> 
 #include "../include/aes.h"
 #include "../include/utils.h"
 #include "../include/sha.h"
@@ -27,4 +29,11 @@ void calculate_hash(const unsigned char* password, const unsigned char* salt, un
 
     // 최종 해시 계산
     SHA256_Final(hash, &sha256_ctx);
+}
+
+void derive_aes_key(const char *password, const unsigned char *salt, size_t salt_len, unsigned char *key, size_t key_len) {
+    if (!PKCS5_PBKDF2_HMAC(password, strlen(password), salt, salt_len, 100000, EVP_sha256(), key_len, key)) {
+        fprintf(stderr, "키 파생 실패\n");
+        exit(1);
+    }
 }

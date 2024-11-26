@@ -18,6 +18,19 @@
             background-color: #f0f0f0;
             padding: 10px;
             border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li a {
+            text-decoration: none;
+            color: #333;
+            flex-grow: 1;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        li:hover {
+            background-color: #e0e0e0;
         }
         button {
             padding: 10px;
@@ -25,6 +38,16 @@
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -33,13 +56,27 @@
     <h1>새 메모 작성</h1>
     <!-- 새 메모 작성 페이지로 이동하는 버튼 -->
     <a href="/create_note"><button>새 메모 작성하기</button></a>
+    
     <h2>{{ username }}님의 메모 목록</h2>
     <ul>
         {% for memo in memos %}
-        <li>{{ memo }}</li>
+        <li>
+            <!-- 메모 제목을 클릭하면 메모 상세 보기로 이동 -->
+            <a href="/view_note?memo_id={{ loop.index }}">{{ memo }}</a>
+
+            <div class="button-group">
+                <!-- 수정하기 버튼, 수정 페이지로 이동 -->
+                <a href="/edit_note?memo_id={{ loop.index }}">
+                    <button>수정하기</button>
+                </a>
+                
+                <!-- 내용 보기 버튼, 메모 내용을 보여주는 페이지로 이동 -->
+                <a href="/view_note?memo_id={{ loop.index }}">
+                    <button>내용 보기</button>
+                </a>
+            </div>
+        </li>
         {% endfor %}
     </ul>
-
-    
 </body>
 </html>

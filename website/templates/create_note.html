@@ -7,26 +7,80 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 20px;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Align elements vertically */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 60%; /* Form container width adjusted for better appearance */
+            max-width: 900px; /* Maximum width */
+            min-width: 400px; /* Minimum width to avoid being too small */
+            margin-bottom: 30px; /* Add margin to separate from footer */
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box; /* Ensure padding does not affect width */
         }
         textarea {
-            width: 100%;
-            height: 200px;
-            margin: 10px 0;
+            height: 250px; /* Increased height for better readability */
+            resize: vertical; /* Allow resizing of textarea vertically */
         }
         button {
-            padding: 10px;
+            padding: 12px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%; /* Make button width full */
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 80%; /* Reduce width on smaller screens */
+            }
         }
     </style>
 </head>
 <body>
-    <h1>새 메모 작성</h1>
-    <!-- 메모 작성 폼 (저장은 하지 않음) -->
-    <textarea placeholder="메모 내용을 입력하세요..."></textarea><br>
-    <button>저장</button>
+    <div class="form-container">
+        <h1>새 메모 작성</h1>
+        <form method="POST" action="/save_note">
+            <label for="title">제목</label>
+            <input type="text" name="title" id="title" required placeholder="메모 제목을 입력하세요">
+            
+            <label for="data">메모 내용</label>
+            <textarea name="data" id="data" placeholder="메모 내용을 입력하세요" required></textarea>
+            
+            <button type="submit">저장하기</button>
+        </form>
+
 </body>
 </html>

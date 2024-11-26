@@ -15,27 +15,52 @@
 
 #include "../include/sha.h"
 
-// SQLite3에서 DB 연결 함수
 sqlite3* connect_db() {
     sqlite3 *db;
-    sqlite3_open("users.db", &db);
+    if (sqlite3_open("users.db", &db) != SQLITE_OK) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return NULL;
+    }
     return db;
 }
 
 void create_user_table(sqlite3 *db) {
-    const char *sql = "CREATE TABLE IF NOT EXISTS users ("
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                      "username TEXT NOT NULL UNIQUE, "
-                      "password BLOB NOT NULL, "
-                      "salt BLOB NOT NULL);";
+    // users 테이블 생성 쿼리
+    const char *user_sql = 
+        "CREATE TABLE IF NOT EXISTS users ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "username TEXT NOT NULL UNIQUE, "
+        "password BLOB NOT NULL, "
+        "salt BLOB NOT NULL);";
+
+// memos 테이블 생성 쿼리
+    const char *memo_sql = 
+        "CREATE TABLE IF NOT EXISTS memos ("
+        "username TEXT NOT NULL, " // 사용자 이름 (외래 키)
+        "memo_id INTEGER NOT NULL, " // 메모 ID
+        "title TEXT NOT NULL, " // 메모 제목
+        "iv BLOB NOT NULL, "  // IV 컬럼
+        "PRIMARY KEY (username, memo_id), " // username + memo_id 조합으로 기본 키 설정
+        "FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE);"; // 외래 키 관계 정의
+
 
     char *err_msg = 0;
-    int rc = sqlite3_exec(db, sql, 0, 0, &err_msg);
+
+    // users 테이블 생성
+    int rc = sqlite3_exec(db, user_sql, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
+        fprintf(stderr, "SQL error in users table creation: %s\n", err_msg);
+        sqlite3_free(err_msg);
+    }
+
+    // memos 테이블 생성
+    rc = sqlite3_exec(db, memo_sql, 0, 0, &err_msg);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "SQL error in memos table creation: %s\n", err_msg);
         sqlite3_free(err_msg);
     }
 }
+
 
 // 디렉토리 생성 함수
 void create_folder(const char *path) {
