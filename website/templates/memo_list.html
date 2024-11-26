@@ -29,15 +29,17 @@
     </style>
 </head>
 <body>
-    <h1>{{ username }}님의 메모 목록</h1>
+
+    <h1>새 메모 작성</h1>
+    <!-- 새 메모 작성 페이지로 이동하는 버튼 -->
+    <a href="/create_note"><button>새 메모 작성하기</button></a>
+    <h2>{{ username }}님의 메모 목록</h2>
     <ul>
         {% for memo in memos %}
         <li>{{ memo }}</li>
         {% endfor %}
     </ul>
 
-    <h2>새 메모 작성</h2>
-    <!-- 새 메모 작성 페이지로 이동하는 버튼 -->
-    <a href="/create_note"><button>새 메모 작성하기</button></a>
+    
 </body>
 </html>
