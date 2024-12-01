@@ -163,12 +163,10 @@ int main(int argc, char *argv[]) {
 
     printf("IV 값 가져오기 성공\n");
 
-     // AES 키 생성
+    // AES 키 생성
     unsigned char key[AES_KEY_LEN];
     memcpy(key, password_hash, AES_KEY_LEN);
     printf("AES 키 생성 완료\n");
-
-
 
     // 파일 복호화
     if (decrypt_file(ciphertext_file, output_file, key, iv) != 0) {
