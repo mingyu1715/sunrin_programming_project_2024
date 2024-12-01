@@ -280,7 +280,5 @@ def edit_note():
         flash("메모가 성공적으로 업데이트되었습니다!")
         return redirect(url_for('memo_list'))
 
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port = 8001, debug=True)
