@@ -176,8 +176,7 @@ def save_note():
 
     # 저장할 파일 경로
     input_file = "input.txt"
-    output_file = os.path.join(user_directory, f"{title}.txt")  # 암호화된 파일은 사용자 디렉토리에 저장
-
+    
     # 데이터를 임시 파일에 저장
     with open(input_file, 'w', encoding='utf-8') as f:
         f.write(data)
@@ -281,4 +280,4 @@ def edit_note():
         return redirect(url_for('memo_list'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port = 8001, debug=True)
+    app.run(debug=True)
